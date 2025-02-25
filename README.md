@@ -30,7 +30,7 @@ MCTS is implemented to provide an efficient exploration-exploitation strategy, g
 ## Setup and Execution
 1. Install required libraries:
 ```bash
-pip install gym[atari] ale-py gym[accept-rom-license] opencv-python pygame
+pip install gymnasium[atari] ale-py gym[accept-rom-license] opencv-python pygame
 ```
 
 2. Run the agent:
