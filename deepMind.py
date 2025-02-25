@@ -19,13 +19,13 @@ EXPLORATION_DECAY = 0.995
 TARGET_UPDATE = 1000  # Update target network every N steps
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# 🎮 Preprocessing function
+#  Preprocessing function
 def preprocess(frame):
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)  # Convert to grayscale
     frame = cv2.resize(frame, (84, 84))  # Resize to 84x84
     return frame / 255.0  # Normalize pixel values
 
-# 🎮 Environment Setup
+#  Environment Setup
 class PongEnv:
     def __init__(self):
         self.env = gym.make("ALE/Pong-v5", frameskip=4)
@@ -44,7 +44,7 @@ class PongEnv:
         self.state_buffer.append(processed)
         return np.array(self.state_buffer, dtype=np.float32), reward, done
 
-# 🧠 Deep Q-Network (CNN)
+#  Deep Q-Network (CNN)
 class DQN(nn.Module):
     def __init__(self, input_shape, num_actions):
         super(DQN, self).__init__()
@@ -63,7 +63,7 @@ class DQN(nn.Module):
         x = x.view(x.size(0), -1)
         return self.fc(x)
 
-# 🎮 Experience Replay Buffer
+#  Experience Replay Buffer
 class ReplayBuffer:
     def __init__(self, capacity):
         self.buffer = collections.deque(maxlen=capacity)
@@ -85,7 +85,7 @@ class ReplayBuffer:
     def __len__(self):
         return len(self.buffer)
 
-# 🎯 DQN Agent
+#  DQN Agent
 class DQNAgent:
     def __init__(self, input_shape, num_actions):
         self.dqn = DQN(input_shape, num_actions).to(DEVICE)
@@ -128,7 +128,7 @@ class DQNAgent:
         self.exploration_rate = max(EXPLORATION_MIN, self.exploration_rate * EXPLORATION_DECAY)
         self.steps += 1
 
-# 🚀 Training Loop
+#  Training Loop
 num_actions = 6  # Pong has 6 discrete actions
 env = PongEnv()
 agent = DQNAgent((4, 84, 84), num_actions)
